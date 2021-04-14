@@ -88,6 +88,9 @@ form {
         position: absolute;
         top: 143px;
         left: 35px;
+        .healingrate{
+          cursor: pointer;
+        }
         .injured,
         .healingrate {
           height: 26px;

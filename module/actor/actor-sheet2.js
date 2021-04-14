@@ -684,6 +684,17 @@ export class DemonlordActorSheet2 extends ActorSheet {
         ) + '%'
     }
 
+    html.on('mousedown', '.healingrate', (ev) => {
+      const oldHp = parseInt(this.actor.data.data.characteristics.health.value)
+      const halvingRate = ev.button === 0 ? 1 : 0.5  // if right click, halve the healing rate
+      const healing = Math.floor(halvingRate * parseInt(this.actor.data.data.characteristics.health.healingrate))
+      let newHp = oldHp - healing
+      newHp = Math.min(Math.max(0, newHp),
+                       parseInt(this.actor.data.data.characteristics.health.max))
+      // Assuming oldHp <= health.max and healing >= 0, the previous can be simplified as newHp = Math.min(0, newHp)
+      this.actor.update({'data.characteristics.health.value': newHp})
+    })
+
     html.on('mousedown', '.addDamage', (ev) => {
       let value = parseInt(this.actor.data.data.characteristics.health.value)
       const max = parseInt(this.actor.data.data.characteristics.health.max)
